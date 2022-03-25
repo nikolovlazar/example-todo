@@ -1,72 +1,43 @@
-import styled from 'styled-components'
-import { useState } from 'react'
+import { Form, TextField } from '@redwoodjs/forms'
+import { Button, Input, HStack } from '@chakra-ui/react'
+
 import Check from 'src/components/Check'
+import { useRef } from 'react'
 
 const AddTodoControl = ({ submitTodo }) => {
-  const [todoText, setTodoText] = useState('')
+  const inputRef = useRef(null)
 
-  const handleSubmit = (event) => {
-    submitTodo(todoText)
-    setTodoText('')
-    event.preventDefault()
-  }
-
-  const handleChange = (event) => {
-    setTodoText(event.target.value)
+  const handleSubmit = (data) => {
+    submitTodo(data.todo)
+    if (inputRef.current) {
+      inputRef.current.value = ''
+    }
   }
 
   return (
-    <SC.Form onSubmit={handleSubmit}>
+    <HStack as={Form} alignItems="center" onSubmit={handleSubmit}>
       <Check type="plus" />
-      <SC.Body>
-        <SC.Input
+      <HStack
+        borderTop="1px solid"
+        borderBottom="1px solid"
+        borderColor="gray.200"
+        w="full"
+      >
+        <Input
+          as={TextField}
+          ref={inputRef}
+          name="todo"
           type="text"
-          value={todoText}
           placeholder="Memorize the dictionary"
-          onChange={handleChange}
+          variant="unstyled"
+          required
         />
-        <SC.Button type="submit" value="Add Item" />
-      </SC.Body>
-    </SC.Form>
+        <Button type="submit" colorScheme="purple">
+          Add Item
+        </Button>
+      </HStack>
+    </HStack>
   )
 }
-
-const SC = {}
-SC.Form = styled.form`
-  display: flex;
-  align-items: center;
-`
-SC.Body = styled.div`
-  border-top: 1px solid #efefef;
-  border-bottom: 1px solid #efefef;
-  width: 100%;
-`
-SC.Input = styled.input`
-  border: none;
-  font-size: 18px;
-  font-family: 'Inconsolata', monospace;
-  padding: 10px 0;
-  width: 75%;
-
-  ::placeholder {
-    color: #e1e1e1;
-  }
-`
-SC.Button = styled.input`
-  float: right;
-  margin-top: 5px;
-  border-radius: 6px;
-  background-color: #8000ff;
-  padding: 5px 15px;
-  color: white;
-  border: 0;
-  font-size: 18px;
-  font-family: 'Inconsolata', monospace;
-
-  :hover {
-    background-color: black;
-    cursor: pointer;
-  }
-`
 
 export default AddTodoControl

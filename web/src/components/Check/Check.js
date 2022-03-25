@@ -1,5 +1,3 @@
-import styled from 'styled-components'
-
 import IconOn from './on.svg'
 import IconOff from './off.svg'
 import IconPlus from './plus.svg'
@@ -13,12 +11,7 @@ const map = {
 }
 
 const Check = ({ type }) => {
-  return <SC.Icon>{map[type]}</SC.Icon>
+  return map[type]
 }
-
-const SC = {}
-SC.Icon = styled.div`
-  margin-right: 15px;
-`
 
 export default Check
