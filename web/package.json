@@ -13,6 +13,7 @@
     ]
   },
   "dependencies": {
+    "@chakra-ui/icons": "^1.1.7",
     "@redwoodjs/forms": "0.47.1",
     "@redwoodjs/router": "0.47.1",
     "@redwoodjs/web": "0.47.1",

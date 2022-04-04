@@ -1,31 +1,43 @@
-import styled from 'styled-components'
 import { MetaTags } from '@redwoodjs/web'
 import AddTodo from 'src/components/AddTodo'
 import TodoListCell from 'src/components/TodoListCell'
+import {
+  Container,
+  Box,
+  Heading,
+  HStack,
+  IconButton,
+  useColorMode,
+} from '@chakra-ui/react'
+import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 
 const HomePage = () => {
+  const { colorMode, toggleColorMode } = useColorMode()
   return (
-    <>
+    <Box h="100vh" pt={20}>
       <MetaTags title="Todos" description="Your list of todo items" />
 
-      <SC.Wrapper>
-        <SC.Title>Todo List</SC.Title>
+      <Container
+        maxW="container.sm"
+        w="full"
+        p={10}
+        bg="gray.50"
+        rounded="md"
+        _dark={{ bg: 'gray.700' }}
+      >
+        <HStack justifyContent="space-between" alignItems="center" mb={6}>
+          <Heading>Todo List</Heading>
+          <IconButton
+            onClick={toggleColorMode}
+            icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}
+            rounded="full"
+          />
+        </HStack>
         <TodoListCell />
         <AddTodo />
-      </SC.Wrapper>
-    </>
+      </Container>
+    </Box>
   )
 }
-
-const SC = {}
-SC.Wrapper = styled.div`
-  width: 600px;
-  margin: 0 auto;
-`
-SC.Title = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-  margin-top: 100px;
-`
 
 export default HomePage
