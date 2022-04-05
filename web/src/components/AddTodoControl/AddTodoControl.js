@@ -1,5 +1,5 @@
 import { Form, TextField, Submit, useForm } from '@redwoodjs/forms'
-import { Button, Input, HStack, FormControl } from '@chakra-ui/react'
+import { Button, Input, HStack } from '@chakra-ui/react'
 
 import Check from 'src/components/Check'
 import { useRef } from 'react'
@@ -29,17 +29,15 @@ const AddTodoControl = ({ submitTodo }) => {
           borderColor="gray.200"
           w="full"
         >
-          <FormControl>
-            <Input
-              as={TextField}
-              ref={inputRef}
-              name="todo"
-              type="text"
-              placeholder="Memorize the dictionary"
-              variant="unstyled"
-              required
-            />
-          </FormControl>
+          <Input
+            as={TextField}
+            ref={inputRef}
+            name="todo"
+            type="text"
+            placeholder="Memorize the dictionary"
+            variant="unstyled"
+            required
+          />
           <Button as={Submit} type="submit" colorScheme="purple">
             Add Item
           </Button>
