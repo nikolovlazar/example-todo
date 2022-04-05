@@ -23,12 +23,7 @@ const AddTodoControl = ({ submitTodo }) => {
     >
       <HStack alignItems="center">
         <Check type="plus" />
-        <HStack
-          borderTop="1px solid"
-          borderBottom="1px solid"
-          borderColor="gray.200"
-          w="full"
-        >
+        <HStack borderY="1px solid" borderColor="gray.200" w="full">
           <Input
             as={TextField}
             ref={inputRef}
