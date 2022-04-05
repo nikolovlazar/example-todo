@@ -1,42 +1,80 @@
-import { Form, TextField } from '@redwoodjs/forms'
-import { Button, Input, HStack } from '@chakra-ui/react'
+import {
+  FieldError,
+  Form,
+  TextField,
+  Submit,
+  FormError,
+  useForm,
+} from '@redwoodjs/forms'
+import {
+  Button,
+  Input,
+  HStack,
+  FormErrorMessage,
+  FormControl,
+} from '@chakra-ui/react'
 
 import Check from 'src/components/Check'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 const AddTodoControl = ({ submitTodo }) => {
   const inputRef = useRef(null)
+  const formMethods = useForm()
+  const [error, setError] = useState()
 
   const handleSubmit = (data) => {
-    submitTodo(data.todo)
-    if (inputRef.current) {
-      inputRef.current.value = ''
+    if (!error) {
+      setError({
+        graphQLErrors: ['Fake error message!'],
+      })
+    } else {
+      submitTodo(data.todo)
+      if (inputRef.current) {
+        inputRef.current.value = ''
+      }
     }
   }
 
   return (
-    <HStack as={Form} alignItems="center" onSubmit={handleSubmit}>
-      <Check type="plus" />
-      <HStack
-        borderTop="1px solid"
-        borderBottom="1px solid"
-        borderColor="gray.200"
-        w="full"
-      >
-        <Input
-          as={TextField}
-          ref={inputRef}
-          name="todo"
-          type="text"
-          placeholder="Memorize the dictionary"
-          variant="unstyled"
-          required
-        />
-        <Button type="submit" colorScheme="purple">
-          Add Item
-        </Button>
+    <Form
+      onSubmit={handleSubmit}
+      config={{ mode: 'onBlur' }}
+      formMethods={formMethods}
+      error={error}
+    >
+      <HStack alignItems="center">
+        <Check type="plus" />
+        <HStack
+          borderTop="1px solid"
+          borderBottom="1px solid"
+          borderColor="gray.200"
+          w="full"
+        >
+          <FormControl isInvalid={!!error}>
+            <Input
+              as={TextField}
+              ref={inputRef}
+              name="todo"
+              type="text"
+              placeholder="Memorize the dictionary"
+              variant="unstyled"
+              validation={{
+                required: true,
+                pattern: {
+                  value: /[^@]+@[^\.]+\..+/,
+                },
+              }}
+            />
+            <FormErrorMessage>
+              <FormError error={error} />
+            </FormErrorMessage>
+          </FormControl>
+          <Button as={Submit} type="submit" colorScheme="purple">
+            Add Item
+          </Button>
+        </HStack>
       </HStack>
-    </HStack>
+    </Form>
   )
 }
 
